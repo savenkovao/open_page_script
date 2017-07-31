@@ -1,25 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Parent page</title>
-	<style>
-		a {
-			display: inline-block;
-			padding: 14px 10px;
-			border: 1px solid grey;
-		}
+<html>
+	<head>
+		<title>Вибір зображення з переліку</title>
+		<meta charset = "utf-8">
+		<script type = "text/JavaScript">
+			function goView()	{
+				// доступ до елементу за відповідним Id 
+				var p1 = document.getElementById('k1');
+				var p2 = document.getElementById('k2');
+				var p3 = document.getElementById('k3');
 
-		a:hover {
-			border: 1px solid blue;
-			cursor: pointer;
-		}
-	</style>
-</head>
-<body>
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus ea impedit maiores sed minus dolor quae fugiat veritatis similique quisquam quidem tempore eum, enim libero nam. Ab assumenda sapiente ex.</p>
-	<a type="submit" onclick="openNewWindow();">Open new window</a>
-	
-	<script src="script.js"></script>
-</body>
+				// формування постійної частини нового документу
+
+				var html = document.createElement('html');
+				var body = document.createElement('body');
+				var head = document.createElement('head');
+				var header = document.createElement('h2');
+				var picture = document.createElement('img');
+
+
+				// відкриття нового вікна
+				var win = window.open("","","width = 500,height = 550");
+				win.document.open('');
+
+				// Формування шляху до фалiв
+				var winHref  =  win.location.href;
+				var winPath  =  winHref.substring(0, winHref.lastIndexOf('/'));
+
+				// Підключення файлу стилів
+				var stylesheet = document.createElement('link');
+				stylesheet.setAttribute("href", "css/style.css");
+				stylesheet.setAttribute("rel", "stylesheet");				
+
+
+				// формування змінної частини нового документу
+				if(p1.selected) { 
+					header.innerHTML = p1.text; 
+					picture.src = winPath + "/gif/bird.gif";	
+				}
+
+				if(p2.selected) { 
+					header.innerHTML = p2.text; 
+					picture.src = winPath + "/gif/monkey.gif";
+				}
+
+				if(p3.selected) { 
+					header.innerHTML = p3.text; 
+					picture.src = winPath + "/gif/progman.gif";
+				}
+
+
+				// сформований документ
+				head.appendChild(stylesheet);
+
+				body.appendChild(header);
+				body.appendChild(picture);
+
+				html.appendChild(head);
+				html.appendChild(body);
+
+
+				// вивід у нове вікно
+				win.document.appendChild(html);
+
+				win.document.close();
+
+			}
+		</script>
+	</head>
+	<body>
+		<form>
+			<h3>Хто працює за компом?</h3>
+			<select>
+				<option id = 'k1'>Птичка</option>
+				<option id = 'k2'>Мавпочка</option>
+				<option id = 'k3'>Хакер</option>
+			</select>
+			<input type = "button" value = "Показати" onclick = "goView();">
+		</form>
+	</body>				
 </html>
